@@ -5,11 +5,12 @@ import 'package:vdiary_internship/core/constants/routes/route_name.dart';
 
 class AppNavigator {
   
-  /// Context-based navigation methods (RECOMMENDED)
-  /// Pass context from widgets to these methods
-  
   static void toLogin(BuildContext context) {
     context.go(AppRouteName.signInScreen);
+  }
+
+  static void toRegister(BuildContext context) {
+    context.go(AppRouteName.signUpScreen);
   }
 
   static void toHome(BuildContext context) {
@@ -20,27 +21,26 @@ class AppNavigator {
     context.go(AppRouteName.dashboardScreen);
   }
 
-  // Pop current route
   static void pop(BuildContext context) {
     context.pop();
   }
 
-  // Check if can pop
   static bool canPop(BuildContext context) {
     return context.canPop();
   }
 
-  // Navigate by name with parameters
+  // Hàm điều hướng custom cho phép truyền tham số
+  // TODO: goNamed -> thay thế màn hình hiện tại
   static void goNamed(BuildContext context, String name, {Map<String, String>? pathParameters, Map<String, dynamic>? queryParameters}) {
     context.goNamed(name, pathParameters: pathParameters ?? {}, queryParameters: queryParameters ?? {});
   }
 
+  // TODO: pushNamed -> thêm một màn hình mới vào stack
   static void pushNamed(BuildContext context, String name, {Map<String, String>? pathParameters, Map<String, dynamic>? queryParameters}) {
     context.pushNamed(name, pathParameters: pathParameters ?? {}, queryParameters: queryParameters ?? {});
   }
 
-  /// Legacy methods (DEPRECATED - avoid using these)
-  /// Only use if you absolutely cannot pass context
+  // TODO: deprecated
   
   @deprecated
   static void toLoginLegacy() {

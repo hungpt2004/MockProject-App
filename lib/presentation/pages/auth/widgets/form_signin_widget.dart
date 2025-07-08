@@ -21,7 +21,7 @@ class FormSignInWidget extends StatefulWidget {
 
   final TextEditingController emailController;
   final TextEditingController passwordController;
-  final GlobalKey<FormState> formKey; // ✅ Một form key duy nhất
+  final GlobalKey<FormState> formKey; 
   final VoidCallback login;
   final VoidCallback register;
   final bool isLoading; 
@@ -64,6 +64,7 @@ class _FormSignInWidgetState extends State<FormSignInWidget> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 22),
               child: MyPasswordFormFieldWidget(
+                labelText: 'Password',
                 controller: widget.passwordController,
                 func: () {},
               ),
@@ -164,7 +165,7 @@ class _FormSignInWidgetState extends State<FormSignInWidget> {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 25),
       child: TextButton(
-        onPressed: widget.isLoading ? null : widget.register,
+        onPressed: widget.register,
         child: Text(
           "Chưa có tài khoản? Đăng ký ngay",
           style: context.textTheme.bodyMedium?.copyWith(

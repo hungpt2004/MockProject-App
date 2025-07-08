@@ -103,7 +103,7 @@ class StoreFactory {
   static Future<void> initializeAll() async {
     // Load saved credentials synchronously
     authController.loadSavedCredentials();
-    
+
     // Initialize other stores
     await Future.wait([
       dashboardController.initialize(),

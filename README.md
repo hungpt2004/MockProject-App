@@ -1,15 +1,20 @@
+
+## Cấu trúc dự án
+
+```bash
 lib/
 ├── core/                      # Mã dùng chung
-│   ├── constants/
-│   ├── utils/
-│   └── extensions/
+│   ├── constants/             # Giá trị constant
+│   │       ├── data/          # Mock data
+│   │       ├── fontsize/      # Cấu hình các fontsize
+│   │       ├── gen/           # Đường dẫn các ảnh
+│   │       ├── storage/       # Các key lưu trữ shared-preferences
+│   │       ├── routes/        # Chứa các tên route
+│   ├── api_response/          # Định nghĩa dữ liệu trả về của API (list/object)
+│   └── network/               # Cấu hình dio interceptor
 │
 ├── data/                      # Giao tiếp dữ liệu: API, local DB, models
-│   ├── datasources/
-│   │   ├── remote/
-│   │   └── local/
 │   ├── models/
-│   ├── repositories_impl/
 │   └── services/
 │
 ├── domain/                    # Nghiệp vụ, không phụ thuộc Flutter
@@ -19,15 +24,16 @@ lib/
 │
 ├── presentation/              # UI + MobX store (viewmodel)
 │   ├── pages/
-│   │       ├── view/          # UI (StatelessWidget/Observer)
-│   │       ├── store/         # MobX store = ViewModel
+│   │       ├── screens/       # UI (StatelessWidget/Observer)
+│   │       ├── controller/    # Xử lý Mobx
+│   │       ├── service/       # Tương tác với API
 │   │       ├── widgets/       # Các widget con (nếu có)
-│   │       └── binding.dart   # (tuỳ dùng get_it, modular,...)
+│   │       ├── routes/        # Chứa các tên route
 │   ├── shared/
 │   └── themes/
 │
-├── injection/                 # DI (get_it, modular,...)
 └── main.dart
+```
 
 ## Entity & Model 
 - Mọi thao tác với logic nghiệp vụ, usecase, store,.. -> sử dụng Entity
@@ -68,6 +74,34 @@ if (mounted) {
     context.go('/home');
 }
 ```
+
+### Cách sử dụng hàm điều hướng có truyền tham số
+
+#### Sử dụng điều hướng có tham số 
+
+```bash
+  AppNavigator.goNamed(
+    context,
+    'user',
+    pathParameters: {
+      'userId': '123',
+    }
+  );
+  URL: /user/123 -> pathParameter
+
+  AppNavigator.goNamed(
+  context,
+  'post-detail',
+  pathParameters: {'postId': '789'},      // Bắt buộc
+  queryParameters: {                      // Tùy chọn
+    'comment': 'true',
+    'share': 'false',
+    'tab': 'comments'
+    }
+  );
+  URL: /post/789?comment=true&share=false&tab=comments
+```
+
 
 ## MOBX NOTE
 ### Lưu ý khi sử dụng

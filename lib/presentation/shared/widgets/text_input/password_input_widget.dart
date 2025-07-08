@@ -7,27 +7,29 @@ import '../../../../core/constants/fontsize/font_size_app.dart';
 
 class MyPasswordFormFieldWidget extends StatefulWidget {
   const MyPasswordFormFieldWidget({
-    super.key, 
-    required this.controller, 
-    this.formKey, // ✅ Làm cho formKey optional
-    required this.func
+    super.key,
+    required this.controller,
+    this.formKey,
+    required this.func,
+    required this.labelText,
   });
 
   final TextEditingController controller;
-  final GlobalKey? formKey; 
+  final String labelText;
+  final GlobalKey? formKey;
   final VoidCallback func;
 
   @override
-  State<MyPasswordFormFieldWidget> createState() => _MyPasswordFormFieldWidgetState();
+  State<MyPasswordFormFieldWidget> createState() =>
+      _MyPasswordFormFieldWidgetState();
 }
 
 class _MyPasswordFormFieldWidgetState extends State<MyPasswordFormFieldWidget> {
-
   // Biến giúp có thể xem hoặc không xem password
   bool _isObsecure = true;
 
   // Hàm logic xử lý isObsecure
-  void _handleViewPassword(){
+  void _handleViewPassword() {
     setState(() {
       _isObsecure = !_isObsecure;
     });
@@ -43,23 +45,22 @@ class _MyPasswordFormFieldWidgetState extends State<MyPasswordFormFieldWidget> {
       textInputAction: TextInputAction.next,
       obscureText: _isObsecure,
       validator: _validatePassword,
-      decoration: _buildInputDecoration());
+      decoration: _buildInputDecoration(),
+    );
   }
-  
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Vui lòng nhập mật khẩu';
     }
-    
+
     if (value.length < 6) {
       return 'Mật khẩu phải có ít nhất 6 ký tự';
     }
-    
+
     return null;
   }
 
-  
   TextStyle _buildTextStyle(Color color) {
     return TextStyle(
       fontSize: FontSizeApp.fontSizeSubMedium,
@@ -80,30 +81,34 @@ class _MyPasswordFormFieldWidgetState extends State<MyPasswordFormFieldWidget> {
   }
 
   InputDecoration _buildInputDecoration() {
-    const borderRadius = BorderRadius.all(Radius.circular(10)); 
+    const borderRadius = BorderRadius.all(Radius.circular(10));
     return InputDecoration(
       border: const OutlineInputBorder(
         borderSide: BorderSide.none,
         borderRadius: borderRadius,
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), 
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       filled: true,
       fillColor: AppColor.BackgroundColor,
-      hintText: '••••••••', 
-      hintStyle: _buildTextStyle(AppColor.LightGrey), 
+      hintText: '••••••••',
+      hintStyle: _buildTextStyle(AppColor.LightGrey),
+      labelText: widget.labelText,
+      prefixIcon: Icon(FluentIcons.password_16_regular, color: AppColor.LightBlue,),
+      labelStyle: _buildTextStyle(AppColor.LightBlue),
       floatingLabelBehavior: FloatingLabelBehavior.auto,
       enabledBorder: _buildBorder(AppColor.LightBlue),
       focusedBorder: _buildBorder(AppColor.LightBlue),
       errorBorder: _buildBorder(Colors.red),
-      focusedErrorBorder: _buildBorder(Colors.red), 
+      focusedErrorBorder: _buildBorder(Colors.red),
       suffixIcon: GestureDetector(
-          onTap: _handleViewPassword,
-          child: Icon(
-            _isObsecure ? FluentIcons.eye_off_16_regular : FluentIcons.eye_16_regular,
-            color: context.colorScheme.onSecondary,
-          ),
+        onTap: _handleViewPassword,
+        child: Icon(
+          _isObsecure
+              ? FluentIcons.eye_off_16_regular
+              : FluentIcons.eye_16_regular,
+          color: context.colorScheme.onSecondary,
         ),
+      ),
     );
   }
-
 }

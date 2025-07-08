@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:vdiary_internship/presentation/themes/theme/app-color/app_color.dart';
 
@@ -7,12 +8,12 @@ class MyEmailFormFieldWidget extends StatelessWidget {
   const MyEmailFormFieldWidget({
     super.key, 
     required this.controller, 
-    this.formKey, // ✅ Làm cho formKey optional
+    this.formKey,
     required this.func
   });
 
   final TextEditingController controller;
-  final GlobalKey? formKey; // ✅ Nullable GlobalKey
+  final GlobalKey? formKey; 
   final VoidCallback func;
 
   @override
@@ -43,7 +44,8 @@ class MyEmailFormFieldWidget extends StatelessWidget {
       hintText: 'Nhập email', 
       hintStyle: _buildTextStyle(AppColor.DefaultColor),
       labelText: 'Email',
-      labelStyle: _buildTextStyle(AppColor.DefaultColor),
+      labelStyle: _buildTextStyle(AppColor.LightBlue),
+      prefixIcon: Icon(FluentIcons.mail_16_regular, color: AppColor.LightBlue,),
       floatingLabelBehavior: FloatingLabelBehavior.auto, 
       enabledBorder: _buildBorder(AppColor.LightGrey),
       focusedBorder: _buildBorder(AppColor.LightBlue),

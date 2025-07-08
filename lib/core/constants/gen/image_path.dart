@@ -4,6 +4,7 @@ class ImagePath {
   static const GoogleImageIcon = 'assets/icon-png/google.png';
   static const AppleImaegIcon = 'assets/icon-png/apple.png';
   static const UserSocialLogin = 'assets/icon-png/social_logo.png';
+  static const UserSocialRegister = 'assets/icon-png/social-nobg.png';
 
   // File định dạnh SVG
   static const FriendImageIcon = 'assets/icon-png/friend.svg';
@@ -25,5 +26,8 @@ class ImagePath {
   static const PageViewImageSecond = 'https://i.pinimg.com/736x/53/1a/c9/531ac9b46b9a25f3c0a6b94f33b250c1.jpg';
   static const PageViewImageThird = 'https://i.pinimg.com/736x/05/6f/36/056f36149793b188d38fc6d1dd0fbdb1.jpg';
   static const PageViewImageFourth = 'https://i.pinimg.com/736x/35/3f/8c/353f8c6146d102aef7e8a5cd9c2952e0.jpg';
+
+  // Lottie Json
+  static const LottieRegisterForm = 'assets/lottie-json/social_animation.json';
 
 }

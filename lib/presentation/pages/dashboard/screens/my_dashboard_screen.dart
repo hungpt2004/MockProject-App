@@ -5,6 +5,8 @@ import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:vdiary_internship/core/constants/fontsize/font_size_app.dart';
 import 'package:vdiary_internship/core/constants/gen/image_path.dart';
+import 'package:vdiary_internship/core/constants/routes/route_name.dart';
+import 'package:vdiary_internship/presentation/routes/app_navigator.dart';
 import 'package:vdiary_internship/presentation/pages/dashboard/controller/navigation_controller.dart';
 import 'package:vdiary_internship/presentation/pages/friends/screens/my_friend_action_screen.dart';
 import 'package:vdiary_internship/presentation/pages/friends/screens/my_friend_screen.dart';
@@ -58,13 +60,17 @@ class _MyDashboardScreenState extends State<MyDashboardScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                if(mounted){
+                  AppNavigator.pop(context);
+                }
               }, 
               child: Text('Hủy')
             ),
             TextButton(
               onPressed: () {
-                // Controller logout
+                if(mounted){
+                  AppNavigator.goNamed(context, 'signin');
+                }
               }, 
               child: Text('Đăng xuất')
             ),

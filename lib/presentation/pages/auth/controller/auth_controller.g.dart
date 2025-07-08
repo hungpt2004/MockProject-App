@@ -28,6 +28,24 @@ mixin _$AuthController on _AuthController, Store {
           ))
           .value;
 
+  late final _$listProvincesAtom = Atom(
+    name: '_AuthController.listProvinces',
+    context: context,
+  );
+
+  @override
+  List<ProvinceModel>? get listProvinces {
+    _$listProvincesAtom.reportRead();
+    return super.listProvinces;
+  }
+
+  @override
+  set listProvinces(List<ProvinceModel>? value) {
+    _$listProvincesAtom.reportWrite(value, super.listProvinces, () {
+      super.listProvinces = value;
+    });
+  }
+
   late final _$isLoadingAtom = Atom(
     name: '_AuthController.isLoading',
     context: context,
@@ -43,6 +61,24 @@ mixin _$AuthController on _AuthController, Store {
   set isLoading(bool value) {
     _$isLoadingAtom.reportWrite(value, super.isLoading, () {
       super.isLoading = value;
+    });
+  }
+
+  late final _$isLoadingProvinceAtom = Atom(
+    name: '_AuthController.isLoadingProvince',
+    context: context,
+  );
+
+  @override
+  bool get isLoadingProvince {
+    _$isLoadingProvinceAtom.reportRead();
+    return super.isLoadingProvince;
+  }
+
+  @override
+  set isLoadingProvince(bool value) {
+    _$isLoadingProvinceAtom.reportWrite(value, super.isLoadingProvince, () {
+      super.isLoadingProvince = value;
     });
   }
 
@@ -172,6 +208,18 @@ mixin _$AuthController on _AuthController, Store {
     });
   }
 
+  late final _$loadVietNamProvincesAsyncAction = AsyncAction(
+    '_AuthController.loadVietNamProvinces',
+    context: context,
+  );
+
+  @override
+  Future<void> loadVietNamProvinces() {
+    return _$loadVietNamProvincesAsyncAction.run(
+      () => super.loadVietNamProvinces(),
+    );
+  }
+
   late final _$loginAsyncAction = AsyncAction(
     '_AuthController.login',
     context: context,
@@ -249,6 +297,18 @@ mixin _$AuthController on _AuthController, Store {
   }
 
   @override
+  void setListProvinces(List<ProvinceModel> list) {
+    final _$actionInfo = _$_AuthControllerActionController.startAction(
+      name: '_AuthController.setListProvinces',
+    );
+    try {
+      return super.setListProvinces(list);
+    } finally {
+      _$_AuthControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setPassword(String value) {
     final _$actionInfo = _$_AuthControllerActionController.startAction(
       name: '_AuthController.setPassword',
@@ -279,6 +339,18 @@ mixin _$AuthController on _AuthController, Store {
     );
     try {
       return super.setLoading(value);
+    } finally {
+      _$_AuthControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setLoadingProvinces(bool value) {
+    final _$actionInfo = _$_AuthControllerActionController.startAction(
+      name: '_AuthController.setLoadingProvinces',
+    );
+    try {
+      return super.setLoadingProvinces(value);
     } finally {
       _$_AuthControllerActionController.endAction(_$actionInfo);
     }
@@ -323,7 +395,9 @@ mixin _$AuthController on _AuthController, Store {
   @override
   String toString() {
     return '''
+listProvinces: ${listProvinces},
 isLoading: ${isLoading},
+isLoadingProvince: ${isLoadingProvince},
 isLoggedIn: ${isLoggedIn},
 token: ${token},
 errorMessage: ${errorMessage},

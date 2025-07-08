@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:vdiary_internship/core/constants/gen/image_path.dart';
-import 'package:vdiary_internship/data/services/routes/app_navigator.dart';
+import 'package:vdiary_internship/presentation/routes/app_navigator.dart';
 import 'package:vdiary_internship/presentation/pages/auth/controller/auth_controller.dart';
 import 'package:vdiary_internship/presentation/pages/auth/widgets/form_signin_widget.dart';
 import 'package:vdiary_internship/presentation/themes/theme/app_theme.dart';
@@ -28,6 +28,12 @@ class _SignInScreenState extends State<SignInScreen> {
     _setupControllers();
   }
 
+  void _goToRegisterPage(){
+    if(mounted){
+      AppNavigator.toRegister(context);
+    }
+  }
+
   void _setupControllers() {
     emailController.addListener(() {
       _authController.setEmail(emailController.text);
@@ -41,7 +47,7 @@ class _SignInScreenState extends State<SignInScreen> {
     passwordController.text = _authController.password;
   }
 
-  Future<void> handleSignIn() async {
+  Future<void> _handleSignIn() async {
     if (!formKey.currentState!.validate()) {
       return;
     }
@@ -109,8 +115,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   emailController: emailController,
                   passwordController: passwordController,
                   formKey: formKey,
-                  login: handleSignIn,
-                  register: handleSignIn, 
+                  login: _handleSignIn,
+                  register: _goToRegisterPage, 
                   isLoading: _authController.isLoading, 
                   isRememberMe: _authController.isRememberMe, 
                   onRememberMeChanged: handleRememberMeChanged, 

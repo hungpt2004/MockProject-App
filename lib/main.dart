@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vdiary_internship/data/services/local_storage/shared_preferences_service.dart';
-import 'package:vdiary_internship/data/services/routes/app_router.dart';
+import 'package:vdiary_internship/presentation/routes/app_router.dart';
 import 'package:vdiary_internship/presentation/themes/theme/app_theme.dart';
 
 void main() async {

@@ -3,12 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vdiary_internship/core/constants/routes/route_name.dart';
 import 'package:vdiary_internship/presentation/pages/auth/screens/signin_screen.dart';
+import 'package:vdiary_internship/presentation/pages/auth/screens/signup_screen.dart';
 import 'package:vdiary_internship/presentation/pages/home/screens/home_screen.dart';
 import 'package:vdiary_internship/presentation/pages/dashboard/screens/my_dashboard_screen.dart';
 
 class AppRouter {
-  static final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
-  
+  static final GlobalKey<NavigatorState> _rootNavigatorKey =
+      GlobalKey<NavigatorState>();
+
   static GoRouter get router => _router;
 
   static final GoRouter _router = GoRouter(
@@ -21,54 +23,74 @@ class AppRouter {
       GoRoute(
         path: AppRouteName.signInScreen,
         name: 'signin',
-        pageBuilder: (context, state) => _buildPageWithTransition(
-          context,
-          state,
-          const SignInScreen(),
-          SlideTransitionType.slideRight,
-        ),
+        pageBuilder:
+            (context, state) => _buildPageWithTransition(
+              context,
+              state,
+              const SignInScreen(),
+              SlideTransitionType.slideLeft,
+            ),
       ),
-      
+
+      // SignUp routes
+      GoRoute(
+        path: AppRouteName.signUpScreen,
+        name: 'signup',
+        pageBuilder:
+            (context, state) => _buildPageWithTransition(
+              context,
+              state,
+              const SignUpScreen(),
+              SlideTransitionType.slideRight,
+            ),
+      ),
+
       // Home Routes
       GoRoute(
         path: AppRouteName.homeScreen,
         name: 'home',
-        pageBuilder: (context, state) => _buildPageWithTransition(
-          context,
-          state,
-          const HomeScreen(),
-          SlideTransitionType.fade,
-        ),
+        pageBuilder:
+            (context, state) => _buildPageWithTransition(
+              context,
+              state,
+              const HomeScreen(),
+              SlideTransitionType.fade,
+            ),
       ),
-      
+
       // Dashboard Routes
       GoRoute(
-        path: '/dashboard',
+        path: AppRouteName.dashboardScreen,
         name: 'dashboard',
-        pageBuilder: (context, state) => _buildPageWithTransition(
-          context,
-          state,
-          const MyDashboardScreen(),
-          SlideTransitionType.slideLeft,
-        ),
+        pageBuilder:
+            (context, state) => _buildPageWithTransition(
+              context,
+              state,
+              const MyDashboardScreen(),
+              SlideTransitionType.slideLeft,
+            ),
       ),
     ],
-    errorPageBuilder: (context, state) => MaterialPage<void>(
-      key: state.pageKey,
-      child: Scaffold(
-        body: Center(
-          child: Text('Page not found: ${state.matchedLocation}'),
+    errorPageBuilder:
+        (context, state) => MaterialPage<void>(
+          key: state.pageKey,
+          child: Scaffold(
+            body: Center(
+              child: Text('Page not found: ${state.matchedLocation}'),
+            ),
+          ),
         ),
-      ),
-    ),
   );
 
   // Kiểm trả xem trong local-storage có không ? Trả về trang home hoặc auth
-  static Future<String?> _redirect(BuildContext context, GoRouterState state) async {
+  static Future<String?> _redirect(
+    BuildContext context,
+    GoRouterState state,
+  ) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('access_token');
     final isAuthenticated = token != null && token.isNotEmpty;
-    
+
     final isLoginPage = state.matchedLocation == AppRouteName.signInScreen;
     final isHomePage = state.matchedLocation == AppRouteName.homeScreen;
 
@@ -82,7 +104,7 @@ class AppRouter {
       print('🔄 Redirecting to home (authenticated user on login page)');
       return AppRouteName.homeScreen;
     }
-    
+
     // Nếu chưa đăng nhập và đang ở trang home, chuyển về login
     if (!isAuthenticated && isHomePage) {
       print('🔄 Redirecting to login (unauthenticated user on home page)');
@@ -130,7 +152,12 @@ class CustomTransitionPage<T> extends Page<T> {
       transitionDuration: transitionDuration,
       reverseTransitionDuration: transitionDuration,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return _buildTransition(animation, secondaryAnimation, child, transitionType);
+        return _buildTransition(
+          animation,
+          secondaryAnimation,
+          child,
+          transitionType,
+        );
       },
     );
   }
@@ -147,10 +174,9 @@ class CustomTransitionPage<T> extends Page<T> {
           position: Tween<Offset>(
             begin: const Offset(1.0, 0.0),
             end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeInOut,
-          )),
+          ).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
           child: child,
         );
 
@@ -159,10 +185,9 @@ class CustomTransitionPage<T> extends Page<T> {
           position: Tween<Offset>(
             begin: const Offset(0.0, 1.0),
             end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeInOut,
-          )),
+          ).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
           child: child,
         );
 
@@ -171,10 +196,9 @@ class CustomTransitionPage<T> extends Page<T> {
           position: Tween<Offset>(
             begin: const Offset(0.0, -1.0),
             end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeInOut,
-          )),
+          ).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
           child: child,
         );
 
@@ -183,40 +207,28 @@ class CustomTransitionPage<T> extends Page<T> {
           position: Tween<Offset>(
             begin: const Offset(-1.0, 0.0),
             end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeInOut,
-          )),
+          ).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
           child: child,
         );
 
       case SlideTransitionType.fade:
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
+        return FadeTransition(opacity: animation, child: child);
 
       case SlideTransitionType.scale:
         return ScaleTransition(
-          scale: Tween<double>(
-            begin: 0.0,
-            end: 1.0,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeInOut,
-          )),
+          scale: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
           child: child,
         );
 
       case SlideTransitionType.rotation:
         return RotationTransition(
-          turns: Tween<double>(
-            begin: 0.0,
-            end: 1.0,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeInOut,
-          )),
+          turns: Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
           child: child,
         );
     }

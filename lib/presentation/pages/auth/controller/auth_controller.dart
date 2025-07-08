@@ -1,14 +1,23 @@
 import 'package:mobx/mobx.dart';
+import 'package:vdiary_internship/data/models/province/province_model.dart';
 import 'package:vdiary_internship/data/services/local_storage/shared_preferences_service.dart';
+import 'package:vdiary_internship/data/services/province_service/province_service.dart';
 
 part 'auth_controller.g.dart';
 
 class AuthController = _AuthController with _$AuthController;
 
 abstract class _AuthController with Store {
+  final ProvinceService _provinceService = ProvinceService();
+
+  @observable
+  List<ProvinceModel>? listProvinces;
 
   @observable
   bool isLoading = false;
+
+  @observable
+  bool isLoadingProvince = false;
 
   @observable
   bool isLoggedIn = false;
@@ -39,6 +48,11 @@ abstract class _AuthController with Store {
   }
 
   @action
+  void setListProvinces(List<ProvinceModel> list) {
+    listProvinces = list;
+  }
+
+  @action
   void setPassword(String value) {
     password = value;
   }
@@ -51,6 +65,11 @@ abstract class _AuthController with Store {
   @action
   void setLoading(bool value) {
     isLoading = value;
+  }
+
+  @action
+  void setLoadingProvinces(bool value) {
+    isLoadingProvince = value;
   }
 
   @action
@@ -72,6 +91,19 @@ abstract class _AuthController with Store {
     }
   }
 
+  @action
+  Future<void> loadVietNamProvinces() async {
+    try {
+      clearError();
+      var fetchData = await _provinceService.getVietNamProvinces();
+      setListProvinces(fetchData);
+    } catch (error) {
+      setError(error.toString());
+    } finally {
+      setLoadingProvinces(false);
+    }
+  }
+
   // API Methods
   @action
   Future<bool> login() async {
@@ -84,9 +116,8 @@ abstract class _AuthController with Store {
       // Mock implementation
       await Future.delayed(Duration(seconds: 2));
       if (email.isNotEmpty && password.isNotEmpty) {
-        
         isLoggedIn = true;
-        
+
         // Lưu dữ liệu vào local storage
         if (isRememberMe) {
           await SharedPreferencesService.setEmail(email);
@@ -94,7 +125,7 @@ abstract class _AuthController with Store {
           await SharedPreferencesService.setRememberMe(isRememberMe);
           await SharedPreferencesService.setLoginStatus(true);
         }
-        
+
         return true;
       } else {
         setError('Email và password không được để trống');
@@ -109,7 +140,12 @@ abstract class _AuthController with Store {
   }
 
   @action
-  Future<bool> register(String name, String email, String password, String confirmPassword) async {
+  Future<bool> register(
+    String name,
+    String email,
+    String password,
+    String confirmPassword,
+  ) async {
     try {
       setLoading(true);
       clearError();
@@ -136,7 +172,7 @@ abstract class _AuthController with Store {
   Future<void> logout() async {
     try {
       setLoading(true);
-      
+
       // Xóa data login trong local-storage
       await SharedPreferencesService.clearDataLogin();
 
@@ -146,7 +182,6 @@ abstract class _AuthController with Store {
       isLoggedIn = false;
       email = '';
       password = '';
-      
     } catch (e) {
       setError('Đăng xuất thất bại: ${e.toString()}');
     } finally {

@@ -4,6 +4,7 @@ import 'package:vdiary_internship/presentation/pages/home/routes/home_route.dart
 
 class AppRouteName {
   static String get signInScreen => AuthRoute.signInScreen;
+  static String get signUpScreen => AuthRoute.signUpScreen;
   static String get homeScreen => HomeRoute.homeScreen;
   static String get dashboardScreen => DashboardRoute.dashboardHome;
 }
