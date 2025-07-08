@@ -5,7 +5,6 @@ import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:vdiary_internship/core/constants/fontsize/font_size_app.dart';
 import 'package:vdiary_internship/core/constants/gen/image_path.dart';
-import 'package:vdiary_internship/core/constants/routes/route_name.dart';
 import 'package:vdiary_internship/presentation/routes/app_navigator.dart';
 import 'package:vdiary_internship/presentation/pages/dashboard/controller/navigation_controller.dart';
 import 'package:vdiary_internship/presentation/pages/friends/screens/my_friend_action_screen.dart';

@@ -5,7 +5,6 @@ import 'package:vdiary_internship/core/constants/gen/image_path.dart';
 import 'package:vdiary_internship/presentation/pages/auth/widgets/form_signup_widget.dart';
 import 'package:vdiary_internship/presentation/routes/app_navigator.dart';
 import 'package:vdiary_internship/presentation/pages/auth/controller/auth_controller.dart';
-import 'package:vdiary_internship/presentation/pages/auth/widgets/form_signin_widget.dart';
 import 'package:vdiary_internship/presentation/themes/theme/app_theme.dart';
 import 'package:vdiary_internship/presentation/themes/theme/responsive/app_responsive_size.dart';
 import 'package:vdiary_internship/presentation/themes/theme/responsive/app_space_size.dart';
@@ -52,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     
     try {
-      // final success = await _authController.register();
+
       final success = true;
 
       if (success) {

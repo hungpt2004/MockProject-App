@@ -5,10 +5,8 @@ import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:vdiary_internship/core/constants/fontsize/font_size_app.dart';
 import 'package:vdiary_internship/data/models/user/user_model.dart';
 import 'package:vdiary_internship/presentation/pages/friends/screens/my_friend_detail_screen.dart';
-import 'package:vdiary_internship/presentation/shared/widgets/button/my_button.dart';
 import 'package:vdiary_internship/presentation/shared/widgets/images/image_widget.dart';
 import 'package:vdiary_internship/presentation/themes/theme/app-color/app_color.dart';
-import 'package:vdiary_internship/presentation/themes/theme/responsive/app_responsive_size.dart';
 import 'package:vdiary_internship/presentation/themes/theme/responsive/app_space_size.dart';
 
 class CardFriendDashboardWidget extends StatefulWidget {
